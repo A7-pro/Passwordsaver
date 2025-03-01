@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session, render_template
+from flask import Flask, request, jsonify, session, send_file
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -94,10 +94,10 @@ def get_passwords():
     decrypted_passwords = [cipher.decrypt(p.password.encode()).decode() for p in passwords]
     return jsonify({'passwords': decrypted_passwords})
 
-# إعداد الصفحة الرئيسية
+# إعداد الصفحة الرئيسية بدون templates
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return send_file('index.html')
 
 if __name__ == '__main__':
     with app.app_context():
