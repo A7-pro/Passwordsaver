@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, session
+from flask import Flask, request, jsonify, session, render_template
 from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import os
@@ -93,6 +93,11 @@ def get_passwords():
     passwords = Password.query.filter_by(user_id=session['user_id']).all()
     decrypted_passwords = [cipher.decrypt(p.password.encode()).decode() for p in passwords]
     return jsonify({'passwords': decrypted_passwords})
+
+# إعداد الصفحة الرئيسية
+@app.route('/')
+def home():
+    return render_template('index.html')
 
 if __name__ == '__main__':
     with app.app_context():
