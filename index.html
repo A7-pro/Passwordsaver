@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password Manager</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+        .footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="title">Password Manager</h2>
+        <label for="language">Choose Language:</label>
+        <select id="language" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="pt">Português</option>
+            <option value="fr">Français</option>
+        </select>
+        <div id="auth">
+            <h3 id="loginTitle">Login</h3>
+            <input type="email" id="email" placeholder="Email">
+            <input type="password" id="password" placeholder="Password">
+            <button onclick="login()" id="loginBtn">Login</button>
+            <button onclick="register()" id="registerBtn">Register</button>
+        </div>
+        <div id="main" style="display:none;">
+            <label for="length">Password Length:</label>
+            <input type="number" id="length" min="6" max="32" value="12">
+            <label><input type="checkbox" id="uppercase" checked> Include Uppercase</label>
+            <label><input type="checkbox" id="lowercase" checked> Include Lowercase</label>
+            <label><input type="checkbox" id="numbers" checked> Include Numbers</label>
+            <label><input type="checkbox" id="symbols"> Include Symbols</label>
+            <button onclick="generatePassword()">Generate Password</button>
+            <h3 id="password"></h3>
+            <button onclick="savePassword()">Save Password</button>
+            <h3>Saved Passwords</h3>
+            <ul id="savedPasswords"></ul>
+        </div>
+        <div class="footer">
+            <p>برمجة وتطوير <a href="https://x.com/a7_be7" target="_blank">عبدالله بن محمد</a></p>
+        </div>
+    </div>
+    <script>
+        let users = {};
+        let currentUser = null;
+        const translations = {
+            en: { title: "Password Manager", loginTitle: "Login", loginBtn: "Login", registerBtn: "Register" },
+            ar: { title: "مدير كلمات المرور", loginTitle: "تسجيل الدخول", loginBtn: "دخول", registerBtn: "تسجيل" },
+            pt: { title: "Gerenciador de Senhas", loginTitle: "Entrar", loginBtn: "Entrar", registerBtn: "Registrar" },
+            fr: { title: "Gestionnaire de Mots de Passe", loginTitle: "Connexion", loginBtn: "Connexion", registerBtn: "S'inscrire" }
+        };
+
+        function changeLanguage() {
+            let lang = document.getElementById("language").value;
+            localStorage.setItem("lang", lang);
+            document.getElementById("title").innerText = translations[lang].title;
+            document.getElementById("loginTitle").innerText = translations[lang].loginTitle;
+            document.getElementById("loginBtn").innerText = translations[lang].loginBtn;
+            document.getElementById("registerBtn").innerText = translations[lang].registerBtn;
+        }
+        document.getElementById("language").value = localStorage.getItem("lang") || "en";
+        changeLanguage();
+    </script>
+</body>
+</html>
