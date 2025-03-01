@@ -3,5 +3,5 @@ services:
     name: password-manager
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn backend_flask:app"
+    startCommand: "gunicorn app:app"
     plan: free
